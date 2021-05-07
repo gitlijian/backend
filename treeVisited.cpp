@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stack>
+#include <queue>
 using namespace std;
 
 struct TreeNode
@@ -92,6 +93,54 @@ void postOrderVisit(TreeNode *root)
     }
 }
 
+// bfs
+void bfs(TreeNode* root) 
+{
+    if(root == nullptr) return ;
+    queue<TreeNode*> q;
+    q.push(root);
+
+    while(!q.empty()) 
+    {
+        TreeNode *node = q.front();
+        cout << node->data << " ";
+
+        if(node->left) q.push(node->left);
+        if(node->right) q.push(node->right);
+
+        q.pop();
+    }
+}
+
+// dfs 递归实现
+void dfs_recursive(TreeNode* root) 
+{
+    if(root == nullptr) return ;
+    cout << root->data << " ";
+
+    if(root->left) dfs_recursive(root->left);
+    if(root->right) dfs_recursive(root->right);
+}
+
+// dfs 迭代实现
+void dfs_iterative(TreeNode* root) 
+{
+    if(root == nullptr) return ;
+    
+    stack<TreeNode*> stk;
+    stk.push(root);
+
+    while(!stk.empty()) 
+    {
+        TreeNode* node = stk.top();
+        cout << node->data << " ";
+        stk.pop();
+
+        if(node->right) stk.push(node->right);
+        if(node->left) stk.push(node->left);
+    }
+}
+
 int main()
 {
     /***************构建二叉树*****************/
@@ -130,6 +179,21 @@ int main()
     //后序遍历
     cout << "postOrderVisit: ";
     postOrderVisit(n1);
+    cout << endl;
+
+    // bfs
+    cout << "bfs: ";
+    bfs(n1);
+    cout << endl;
+
+    // dfs 递归
+    cout << "dfs_recursive: ";
+    dfs_recursive(n1);
+    cout << endl;
+
+    // dfs 迭代
+    cout << "dfs_iterative: ";
+    dfs_iterative(n1);
     cout << endl;
 
     system("pause");
